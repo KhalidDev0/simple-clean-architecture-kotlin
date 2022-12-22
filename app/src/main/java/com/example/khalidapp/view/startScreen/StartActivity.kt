@@ -1,18 +1,26 @@
 package com.example.khalidapp.view.startScreen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.khalidapp.R
-import com.example.khalidapp.viewModel.StartScreenViewModel
-import androidx.activity.viewModels
+import com.example.khalidapp.databinding.ActivityStartBinding
+import com.example.khalidapp.view.authScreen.AuthActivity
 
 class StartActivity : AppCompatActivity() {
 
-    private val TAG = "StartActivity"
-    private val viewModel : StartScreenViewModel by viewModels()
+    private var binding: ActivityStartBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
+        binding = ActivityStartBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+
+        binding!!.lifecycleOwner = this
+        binding!!.startActivity = this@StartActivity
+    }
+
+    fun navigateToAuthScreen() {
+        val intent = Intent(this, AuthActivity::class.java)
+        this.startActivity(intent)
     }
 }
