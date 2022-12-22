@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "51341298171",
+    "project_id": "khaliddev0app",
+    "storage_bucket": "khaliddev0app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51341298171:android:6cbe1a3caa320bc835235e",
+        "android_client_info": {
+          "package_name": "com.example.khalidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51341298171-7pv61055lhf7e2itphdlc19v198fcjra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsRMooaFquwzm3M4LG0LjI9_YxSheRM_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51341298171-7pv61055lhf7e2itphdlc19v198fcjra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
