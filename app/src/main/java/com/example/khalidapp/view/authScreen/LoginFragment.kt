@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.khalidapp.R
 import com.example.khalidapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -22,6 +25,18 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.apply {
+            lifecycleOwner = this@LoginFragment
+            loginFragment = this@LoginFragment
+        }
+    }
 
+    fun navigateToRegisterScreen(){
+        findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
