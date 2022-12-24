@@ -22,8 +22,7 @@
             android:src="@drawable/ic_app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ImageContrastCheck" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/register_button"
@@ -43,7 +42,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:text="@string/your_email"
+            android:hint="@string/your_email"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
@@ -54,7 +53,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:text="@string/your_password"
+            android:hint="@string/your_password"
             app:layout_constraintTop_toBottomOf="@+id/textEmailAddress" />
 
         <EditText
@@ -65,7 +64,7 @@
             android:ems="10"
             android:minHeight="48dp"
             android:inputType="number"
-            android:text="@string/your_age"
+            android:hint="@string/your_age"
             app:layout_constraintTop_toBottomOf="@+id/textName" />
 
         <EditText
@@ -76,7 +75,7 @@
             android:ems="10"
             android:minHeight="48dp"
             android:inputType="text"
-            android:text="@string/your_name"
+            android:hint="@string/your_name"
             app:layout_constraintTop_toBottomOf="@+id/textPassword" />
 
         <RadioGroup
