@@ -1,16 +1,16 @@
 package com.example.khalidapp.viewModel.authScreen.registerFragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class RegisterViewModel(
-    private val resultCallBack: RegisterResultCallBack,
-) : ViewModel() {
+class RegisterViewModel() : ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
+
+    private val _navigateToHome = MutableLiveData(false)
+    val navigateToHome: LiveData<Boolean> = _navigateToHome
 
     private val _password = MutableLiveData<String>()
     val password: LiveData<String> = _password
@@ -46,33 +46,38 @@ class RegisterViewModel(
 
     fun registerUser() {
         if (!checkValidity()){
-            resultCallBack.onRegisterFailed("Please complete the registration!")
             return
         }
 
         //Register the user to the Firebase
         //if successful
-        resultCallBack.onRegisterSuccess()
+        _navigateToHome.value = true
     }
 
     private fun checkValidity(): Boolean {
+        var isFormValid = true
 
         if (email.value.isNullOrEmpty() || email.value.isNullOrBlank()) {
-            return false
-        } else if (password.value.isNullOrEmpty() || password.value.isNullOrBlank()) {
-
-            return false
-        } else if (name.value.isNullOrEmpty() || name.value.isNullOrBlank()) {
-
-            return false
-        } else if (age.value.isNullOrEmpty() || age.value.isNullOrBlank()) {
-
-            return false
-        } else if (gender.value.isNullOrEmpty() || gender.value.isNullOrBlank()) {
-
-            return false
+            _email.value = ""
+            isFormValid = false
         }
-        return true
+        if (password.value.isNullOrEmpty() || password.value.isNullOrBlank()) {
+            _password.value = ""
+            isFormValid = false
+        }
+        if (name.value.isNullOrEmpty() || name.value.isNullOrBlank()) {
+            _name.value = ""
+            isFormValid = false
+        }
+        if (age.value.isNullOrEmpty() || age.value.isNullOrBlank()) {
+            _age.value = ""
+            isFormValid = false
+        }
+        if (gender.value.isNullOrEmpty() || gender.value.isNullOrBlank()) {
+            _gender.value = ""
+            isFormValid = false
+        }
+        return isFormValid
     }
 
 }
