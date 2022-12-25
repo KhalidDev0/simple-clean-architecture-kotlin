@@ -5,14 +5,17 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.khalidapp.viewModel.authScreen.registerFragment.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.authScreen.RegisterFragment"
+        android:paddingHorizontal="70dp"
         android:paddingVertical="20dp"
-        android:paddingHorizontal="70dp">
+        tools:context=".view.authScreen.RegisterFragment">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -29,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="@{() -> viewModel.registerUser()}"
             android:text="@string/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,46 +40,59 @@
 
         <EditText
             android:id="@+id/textEmailAddress"
+            emailValidation="@{viewModel.email}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:ems="10"
+            android:hint="@string/your_email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:hint="@string/your_email"
+            android:onTextChanged="@{viewModel::setEmail}"
+            android:text="@{viewModel.email}"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
             android:id="@+id/textPassword"
+            passwordValidation="@{viewModel.password}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/your_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:hint="@string/your_password"
+            android:onTextChanged="@{viewModel::setPassword}"
+            android:text="@{viewModel.password}"
             app:layout_constraintTop_toBottomOf="@+id/textEmailAddress" />
 
         <EditText
             android:id="@+id/textAge"
+            ageValidation="@{viewModel.age}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:minHeight="48dp"
-            android:inputType="number"
             android:hint="@string/your_age"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setAge}"
+            android:text="@{viewModel.age}"
             app:layout_constraintTop_toBottomOf="@+id/textName" />
 
         <EditText
             android:id="@+id/textName"
+            nameValidation="@{viewModel.name}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:minHeight="48dp"
-            android:inputType="text"
             android:hint="@string/your_name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setName}"
+            android:text="@{viewModel.name}"
             app:layout_constraintTop_toBottomOf="@+id/textPassword" />
 
         <RadioGroup
@@ -91,12 +108,16 @@
                 android:id="@+id/male_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{viewModel.gender.equals(@string/male)}"
+                android:onClick="@{()-> viewModel.setGender(@string/male)}"
                 android:text="@string/male" />
 
             <RadioButton
                 android:id="@+id/female_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{viewModel.gender.equals(@string/female)}"
+                android:onClick="@{()-> viewModel.setGender(@string/female)}"
                 android:text="@string/female" />
         </RadioGroup>
 
