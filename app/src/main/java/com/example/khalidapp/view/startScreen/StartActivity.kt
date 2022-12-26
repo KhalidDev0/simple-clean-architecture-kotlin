@@ -15,12 +15,20 @@ class StartActivity : AppCompatActivity() {
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        binding!!.lifecycleOwner = this
-        binding!!.startActivity = this@StartActivity
+        binding!!.apply {
+            lifecycleOwner = this@StartActivity
+            startActivity = this@StartActivity
+        }
     }
 
     fun navigateToAuthScreen() {
         val intent = Intent(this, AuthActivity::class.java)
         this.startActivity(intent)
+        this.finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

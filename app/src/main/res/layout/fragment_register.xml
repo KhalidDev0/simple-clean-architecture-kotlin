@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.khalidapp.viewModel.authScreen.registerFragment.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="70dp"
+        android:paddingVertical="20dp"
+        tools:context=".view.authScreen.RegisterFragment">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/main_logo"
+            android:src="@drawable/ic_app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="@{() -> viewModel.registerUser()}"
+            android:text="@string/register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <EditText
+            android:id="@+id/textEmailAddress"
+            emailValidation="@{viewModel.email}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:hint="@string/your_email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setEmail}"
+            android:text="@{viewModel.email}"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <EditText
+            android:id="@+id/textPassword"
+            passwordValidation="@{viewModel.password}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/your_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setPassword}"
+            android:text="@{viewModel.password}"
+            app:layout_constraintTop_toBottomOf="@+id/textEmailAddress" />
+
+        <EditText
+            android:id="@+id/textAge"
+            ageValidation="@{viewModel.age}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/your_age"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setAge}"
+            android:text="@{viewModel.age}"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <EditText
+            android:id="@+id/textName"
+            nameValidation="@{viewModel.name}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/your_name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:onTextChanged="@{viewModel::setName}"
+            android:text="@{viewModel.name}"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textAge">
+
+            <RadioButton
+                android:id="@+id/male_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.gender.equals(@string/male)}"
+                android:onClick="@{()-> viewModel.setGender(@string/male)}"
+                android:text="@string/male" />
+
+            <RadioButton
+                android:id="@+id/female_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.gender.equals(@string/female)}"
+                android:onClick="@{()-> viewModel.setGender(@string/female)}"
+                android:text="@string/female" />
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
