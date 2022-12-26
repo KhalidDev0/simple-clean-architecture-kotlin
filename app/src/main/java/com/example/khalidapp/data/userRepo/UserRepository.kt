@@ -6,5 +6,5 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 interface UserRepository {
     suspend fun addUser(uid: String, user: User) : Resource<Boolean>
-    suspend fun getUser(uid: String) : Resource<DocumentSnapshot>
+    suspend fun getCurrentUser() : Resource<Map<String, Any>>
 }
