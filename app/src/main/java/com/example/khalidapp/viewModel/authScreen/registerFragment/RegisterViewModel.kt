@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.khalidapp.common.utils.Resource
 import com.example.khalidapp.data.authRepository.AuthRepository
 import com.example.khalidapp.data.userRepo.UserRepository
 import com.example.khalidapp.model.User
@@ -62,26 +63,49 @@ class RegisterViewModel @Inject constructor(
 
         //Register the user to the Firebase auth and Firestore
         viewModelScope.launch {
-            val user = authRepository.registerWithEmailAndPassword(
+            val resource = authRepository.registerWithEmailAndPassword(
                 email.value!!,
                 password.value!!,
             )
-            if (user != null) {
-                val isAdded: Boolean = userRepository
-                    .addUser(
-                        user.uid,
-                        User(user.email!!,
-                            _name.value!!,
-                            _age.value!!,
-                            _gender.value!!,
-                        )
-                    )
-                if (isAdded) {
-                    _navigateToHome.value = true
+
+            when (resource) {
+                is Resource.Success -> {
+                    addUser(resource.data.uid)
+                }
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
                 }
             }
-        }
 
+        }
+    }
+
+    private suspend fun addUser(uid: String) {
+        val resource = userRepository
+            .addUser(
+                uid,
+                User(
+                    _email.value!!,
+                    _name.value!!,
+                    _age.value!!,
+                    _gender.value!!,
+                )
+            )
+
+        when (resource) {
+            is Resource.Success -> {
+                _navigateToHome.value = true
+            }
+            is Resource.Error -> {
+
+            }
+            is Resource.Loading -> {
+
+            }
+        }
     }
 
     private fun checkValidity(): Boolean {
