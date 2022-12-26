@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import com.example.khalidapp.databinding.FragmentRegisterBinding
 import com.example.khalidapp.view.homeScreen.HomeActivity
 import com.example.khalidapp.viewModel.authScreen.registerFragment.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private var binding: FragmentRegisterBinding? = null

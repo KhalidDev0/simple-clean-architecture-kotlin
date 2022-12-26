@@ -3,8 +3,19 @@ package com.example.khalidapp.viewModel.authScreen.registerFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.khalidapp.data.authRepository.AuthRepository
+import com.example.khalidapp.data.userRepo.UserRepository
+import com.example.khalidapp.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel() : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
+) : ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
@@ -45,13 +56,32 @@ class RegisterViewModel() : ViewModel() {
     }
 
     fun registerUser() {
-        if (!checkValidity()){
+        if (!checkValidity()) {
             return
         }
 
-        //Register the user to the Firebase
-        //if successful
-        _navigateToHome.value = true
+        //Register the user to the Firebase auth and Firestore
+        viewModelScope.launch {
+            val user = authRepository.registerWithEmailAndPassword(
+                email.value!!,
+                password.value!!,
+            )
+            if (user != null) {
+                val isAdded: Boolean = userRepository
+                    .addUser(
+                        user.uid,
+                        User(user.email!!,
+                            _name.value!!,
+                            _age.value!!,
+                            _gender.value!!,
+                        )
+                    )
+                if (isAdded) {
+                    _navigateToHome.value = true
+                }
+            }
+        }
+
     }
 
     private fun checkValidity(): Boolean {
