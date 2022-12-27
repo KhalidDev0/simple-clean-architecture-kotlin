@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.khalidapp.domain.auth.model.User
 import com.example.khalidapp.domain.auth.repository.AuthRepository
 import com.example.khalidapp.domain.auth.repository.UserRepository
+import com.example.khalidapp.domain.home.useCase.HomeUseCases
 import com.example.khalidapp.presentation.common.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val authRepository: AuthRepository
+    private val homeUseCases: HomeUseCases
 ) : ViewModel() {
 
     private val _userInfo = MutableLiveData<User>()
@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getUser() {
         viewModelScope.launch {
-            val resource = userRepository.getCurrentUser()
+            val resource = homeUseCases.getUserUseCase()
             when (resource) {
                 is Resource.Success -> {
                     _userInfo.value = resource.data
@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch {
-            when (authRepository.logout()) {
+            when (homeUseCases.signOutUseCase()) {
                 is Resource.Success -> {
                     _navigateToStart.value = true
                 }
