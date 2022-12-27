@@ -6,17 +6,17 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.khalidapp.viewModel.authScreen.loginFragment.LoginViewModel" />
+            type="com.example.khalidapp.presentation.auth.viewModel.LoginViewModel" />
 
         <variable
             name="loginFragment"
-            type="com.example.khalidapp.view.authScreen.LoginFragment" />
+            type="com.example.khalidapp.presentation.auth.view.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.authScreen.LoginFragment"
+        tools:context=".presentation.auth.view.LoginFragment"
         android:paddingVertical="20dp"
         android:paddingHorizontal="70dp">
 

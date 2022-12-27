@@ -6,19 +6,19 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.khalidapp.viewModel.homeScreen.HomeViewModel" />
+            type="com.example.khalidapp.presentation.home.viewModel.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.homeScreen.HomeActivity">
+        tools:context=".presentation.home.view.HomeActivity">
 
         <TextView
             android:id="@+id/user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.userInfo}"
+            android:text="@{viewModel.userInfo.toString()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
