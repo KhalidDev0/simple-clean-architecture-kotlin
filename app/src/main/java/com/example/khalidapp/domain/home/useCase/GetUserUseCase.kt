@@ -8,11 +8,7 @@ class GetUserUseCase(
     private val userRepository: UserRepository
 ) {
     suspend operator fun invoke(): Resource<User> {
-        return when (val resource = userRepository.getCurrentUser()) {
-            is Resource.Success ->  Resource.Success(resource.data)
-            is Resource.Error ->  Resource.Error(resource.apiError)
-            is Resource.Loading -> Resource.Loading()
-        }
+        return userRepository.getCurrentUser()
     }
 
 }

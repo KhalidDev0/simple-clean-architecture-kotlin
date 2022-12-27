@@ -7,12 +7,8 @@ class SignOutUseCase(
     private val authRepository: AuthRepository
 ) {
 
-    suspend operator fun invoke(): Resource<String>{
-        return when(val resource = authRepository.signOut()){
-            is Resource.Success -> Resource.Success("Signed out successfully")
-            is Resource.Error -> Resource.Error(resource.apiError)
-            is Resource.Loading -> Resource.Loading()
-        }
+    suspend operator fun invoke(): Resource<Boolean>{
+        return authRepository.signOut()
     }
 
 }
