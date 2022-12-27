@@ -22,4 +22,5 @@
     <string name="your_age">Your Age</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="sign_out">Sign out</string>
 </resources>
