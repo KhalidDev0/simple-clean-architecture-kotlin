@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.khalidapp.databinding.FragmentRegisterBinding
 import com.example.khalidapp.presentation.auth.register.viewModel.RegisterViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -41,10 +43,12 @@ class RegisterFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.navigateToHome.observe(viewLifecycleOwner) {
-            if (it) {
-                startActivity(Intent(requireContext(), HomeActivity::class.java))
-                requireActivity().finish()
+        lifecycleScope.launch{
+            viewModel.navigateToHome.collect {
+                if (it) {
+                    startActivity(Intent(requireContext(), HomeActivity::class.java))
+                    requireActivity().finish()
+                }
             }
         }
     }

@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.khalidapp.R
 import com.example.khalidapp.databinding.FragmentLoginBinding
 import com.example.khalidapp.presentation.auth.login.viewModel.LoginViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -43,10 +45,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.navigateToHome.observe(viewLifecycleOwner) {
-            if (it) {
-                startActivity(Intent(requireContext(), HomeActivity::class.java))
-                requireActivity().finish()
+        lifecycleScope.launch {
+            viewModel.navigateToHome.collect {
+                if (it) {
+                    startActivity(Intent(requireContext(), HomeActivity::class.java))
+                    requireActivity().finish()
+                }
             }
         }
     }

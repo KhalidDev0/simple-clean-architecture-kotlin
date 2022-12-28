@@ -9,6 +9,8 @@ import com.example.khalidapp.domain.auth.usecase.GetUserUseCase
 import com.example.khalidapp.domain.auth.usecase.SignOutUseCase
 import com.example.khalidapp.presentation.common.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,11 +20,11 @@ class HomeViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
-    private val _userInfo = MutableLiveData<User>()
-    val userInfo: LiveData<User> = _userInfo
+    private val _userInfo = MutableStateFlow(User("","","","",))
+    val userInfo: StateFlow<User> = _userInfo
 
-    private val _navigateToStart = MutableLiveData(false)
-    val navigateToStart: LiveData<Boolean> = _navigateToStart
+    private val _navigateToStart = MutableStateFlow(false)
+    val navigateToStart: StateFlow<Boolean> = _navigateToStart
 
     init {
         getUser()

@@ -55,7 +55,6 @@
         <EditText
             android:id="@+id/textEmailAddress"
             android:layout_width="match_parent"
-            emailValidation="@{viewModel.email}"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:ems="10"
@@ -68,7 +67,6 @@
         <EditText
             android:id="@+id/textPassword"
             android:layout_width="match_parent"
-            passwordValidation="@{viewModel.password}"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"

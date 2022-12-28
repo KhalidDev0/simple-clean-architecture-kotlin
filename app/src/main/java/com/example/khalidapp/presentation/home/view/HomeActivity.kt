@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.khalidapp.databinding.ActivityHomeBinding
 import com.example.khalidapp.presentation.home.viewModel.HomeViewModel
 import com.example.khalidapp.presentation.start.view.StartActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -30,10 +32,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun observe() {
-        viewModel.navigateToStart.observe(this) {
-            if (it) {
-                startActivity(Intent(this, StartActivity::class.java))
-                this.finish()
+        lifecycleScope.launch{
+            viewModel.navigateToStart.collect{
+                if (it) {
+                    startActivity(Intent(this@HomeActivity, StartActivity::class.java))
+                    this@HomeActivity.finish()
+                }
             }
         }
     }

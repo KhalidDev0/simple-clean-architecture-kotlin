@@ -40,7 +40,6 @@
 
         <EditText
             android:id="@+id/textEmailAddress"
-            emailValidation="@{viewModel.email}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -54,7 +53,6 @@
 
         <EditText
             android:id="@+id/textPassword"
-            passwordValidation="@{viewModel.password}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -68,7 +66,6 @@
 
         <EditText
             android:id="@+id/textAge"
-            ageValidation="@{viewModel.age}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -83,7 +80,6 @@
 
         <EditText
             android:id="@+id/textName"
-            nameValidation="@{viewModel.name}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
