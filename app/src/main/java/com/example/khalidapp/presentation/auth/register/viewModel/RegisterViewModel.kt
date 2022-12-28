@@ -1,12 +1,12 @@
-package com.example.khalidapp.presentation.auth.viewModel
+package com.example.khalidapp.presentation.auth.register.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.khalidapp.domain.auth.model.User
-import com.example.khalidapp.domain.auth.repository.AuthRepository
-import com.example.khalidapp.domain.auth.repository.UserRepository
+import com.example.khalidapp.domain.auth.usecase.AddUserUseCase
+import com.example.khalidapp.domain.auth.usecase.RegisterUseCase
 import com.example.khalidapp.presentation.common.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val userRepository: UserRepository,
-) : ViewModel() {
+    private val registerUseCase: RegisterUseCase,
+    private val addUserUseCase: AddUserUseCase
+    ) : ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
@@ -63,7 +63,7 @@ class RegisterViewModel @Inject constructor(
 
         //Register the user to the Firebase auth and Firestore
         viewModelScope.launch {
-            val resource = authRepository.registerWithEmailAndPassword(
+            val resource = registerUseCase(
                 email.value!!,
                 password.value!!,
             )
@@ -84,8 +84,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun addUser(uid: String) {
-        val resource = userRepository
-            .addUser(
+        val resource = addUserUseCase(
                 uid,
                 User(
                     _email.value!!,

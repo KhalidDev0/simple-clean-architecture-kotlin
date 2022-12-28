@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.khalidapp.presentation.auth.view.LoginFragment"
+        android:name="com.example.khalidapp.presentation.auth.login.view.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.khalidapp.presentation.auth.view.RegisterFragment"
+        android:name="com.example.khalidapp.presentation.auth.register.view.RegisterFragment"
         android:label="Register"
         tools:layout="@layout/fragment_register" />
 </navigation>

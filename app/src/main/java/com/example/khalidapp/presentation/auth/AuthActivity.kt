@@ -1,4 +1,4 @@
-package com.example.khalidapp.presentation.auth.view
+package com.example.khalidapp.presentation.auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.khalidapp.presentation.auth.viewModel.RegisterViewModel" />
+            type="com.example.khalidapp.presentation.auth.register.viewModel.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="70dp"
         android:paddingVertical="20dp"
-        tools:context=".presentation.auth.view.RegisterFragment">
+        tools:context=".presentation.auth.register.view.RegisterFragment">
 
         <ImageView
             android:id="@+id/imageView2"

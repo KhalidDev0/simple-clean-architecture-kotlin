@@ -1,4 +1,4 @@
-package com.example.khalidapp.domain.home.useCase
+package com.example.khalidapp.domain.auth.usecase
 
 import com.example.khalidapp.domain.auth.repository.AuthRepository
 import com.example.khalidapp.presentation.common.utils.Resource

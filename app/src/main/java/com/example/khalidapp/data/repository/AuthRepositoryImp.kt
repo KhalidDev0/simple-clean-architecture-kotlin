@@ -11,7 +11,7 @@ class AuthRepositoryImp(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
-    override suspend fun registerWithEmailAndPassword(
+    override suspend fun register(
         email: String,
         password: String
     ): Resource<FirebaseUser> {

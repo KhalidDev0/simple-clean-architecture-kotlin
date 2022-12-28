@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.khalidapp.databinding.ActivityStartBinding
-import com.example.khalidapp.presentation.auth.view.AuthActivity
+import com.example.khalidapp.presentation.auth.AuthActivity
 
 class StartActivity : AppCompatActivity() {
 

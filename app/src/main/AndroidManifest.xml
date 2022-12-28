@@ -16,7 +16,7 @@
         android:theme="@style/Theme.KhalidApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.auth.view.AuthActivity"
+            android:name=".presentation.auth.AuthActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
