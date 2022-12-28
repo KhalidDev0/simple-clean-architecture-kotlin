@@ -42,6 +42,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPassword" />
 
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:visibility="visible"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
         <Button
             android:id="@+id/register_button"
             android:layout_width="wrap_content"
@@ -56,13 +65,13 @@
             android:id="@+id/textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:ems="10"
-            android:inputType="textEmailAddress"
             android:hint="@string/your_email"
+            android:inputType="textEmailAddress"
             android:onTextChanged="@{viewModel::setEmail}"
             android:text="@{viewModel.email}"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/loadingBar"
+            tools:layout_editor_absoluteX="70dp" />
 
         <EditText
             android:id="@+id/textPassword"

@@ -21,6 +21,9 @@ class LoginViewModel @Inject constructor(
     private val _password = MutableStateFlow("")
     val password: StateFlow<String> = _password
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     private val _navigateToHome = MutableStateFlow(false)
     val navigateToHome: StateFlow<Boolean> = _navigateToHome
 
@@ -40,11 +43,12 @@ class LoginViewModel @Inject constructor(
 
         //Register the user to the Firebase auth and Firestore
         viewModelScope.launch {
+            _isLoading.value = true
             val resource = loginUseCase(
                 email.value,
                 password.value,
             )
-
+            _isLoading.value = false
             when (resource) {
                 is Resource.Success -> {
                     _navigateToHome.value = true

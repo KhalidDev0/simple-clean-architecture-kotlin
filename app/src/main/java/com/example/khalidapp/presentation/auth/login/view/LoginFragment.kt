@@ -46,12 +46,29 @@ class LoginFragment : Fragment() {
 
     private fun observe() {
         lifecycleScope.launch {
-            viewModel.navigateToHome.collect {
-                if (it) {
-                    startActivity(Intent(requireContext(), HomeActivity::class.java))
-                    requireActivity().finish()
+            launch {
+                viewModel.navigateToHome.collect {
+                    if (it) {
+                        startActivity(Intent(requireContext(), HomeActivity::class.java))
+                        requireActivity().finish()
+                    }
                 }
             }
+            launch {
+                viewModel.isLoading.collect {
+                    if (it) {
+                        binding?.apply {
+                            loadingBar.visibility = View.VISIBLE
+                        }
+                    }
+                    else {
+                        binding?.apply {
+                            loadingBar.visibility = View.INVISIBLE
+                        }
+                    }
+                }
+            }
+
         }
     }
 
