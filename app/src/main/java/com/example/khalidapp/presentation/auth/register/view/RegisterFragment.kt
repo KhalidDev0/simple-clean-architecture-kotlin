@@ -1,4 +1,4 @@
-package com.example.khalidapp.presentation.auth.view
+package com.example.khalidapp.presentation.auth.register.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.khalidapp.databinding.FragmentRegisterBinding
-import com.example.khalidapp.presentation.auth.viewModel.RegisterViewModel
+import com.example.khalidapp.presentation.auth.register.viewModel.RegisterViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 

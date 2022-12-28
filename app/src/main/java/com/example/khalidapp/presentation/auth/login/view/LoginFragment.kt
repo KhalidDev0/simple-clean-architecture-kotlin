@@ -1,4 +1,4 @@
-package com.example.khalidapp.presentation.auth.view
+package com.example.khalidapp.presentation.auth.login.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.khalidapp.R
 import com.example.khalidapp.databinding.FragmentLoginBinding
-import com.example.khalidapp.presentation.auth.viewModel.LoginViewModel
+import com.example.khalidapp.presentation.auth.login.viewModel.LoginViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 

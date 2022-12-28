@@ -11,7 +11,7 @@ class AuthRepositoryImp(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
-    override suspend fun registerWithEmailAndPassword(
+    override suspend fun register(
         email: String,
         password: String
     ): Resource<FirebaseUser> {
@@ -36,7 +36,7 @@ class AuthRepositoryImp(
         }
     }
 
-    override suspend fun logout(): Resource<Boolean> {
+    override suspend fun signOut(): Resource<Boolean> {
         return try {
             firebaseAuth.signOut()
             Resource.Success(true)

@@ -1,10 +1,12 @@
-package com.example.khalidapp.presentation.auth.viewModel
+package com.example.khalidapp.presentation.auth.login.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.khalidapp.domain.auth.repository.AuthRepository
+import com.example.khalidapp.domain.auth.usecase.LoginUseCase
 import com.example.khalidapp.presentation.common.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
     private val _email = MutableLiveData<String>()
@@ -33,23 +35,27 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginUser() {
+
         if (!checkValidity()) {
             return
         }
 
         //Register the user to the Firebase auth and Firestore
         viewModelScope.launch {
-            val resource = authRepository.login(
+            Log.d("TEST", "${_email.value}, ${_password.value}")
+            val resource = loginUseCase(
                 email.value!!,
                 password.value!!,
             )
+
+            Log.d("TEST", "${resource.toString()}")
 
             when (resource) {
                 is Resource.Success -> {
                     _navigateToHome.value = true
                 }
                 is Resource.Error -> {
-
+                    Log.d("TEST", resource.apiError.errorMessage)
                 }
                 is Resource.Loading -> {
 
