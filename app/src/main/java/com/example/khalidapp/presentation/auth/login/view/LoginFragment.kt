@@ -13,7 +13,9 @@ import com.example.khalidapp.R
 import com.example.khalidapp.databinding.FragmentLoginBinding
 import com.example.khalidapp.presentation.auth.login.viewModel.LoginViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -47,7 +49,15 @@ class LoginFragment : Fragment() {
     private fun observe() {
         lifecycleScope.launch {
             launch {
-                viewModel.navigateToHome.collect {
+                viewModel.loginError.collectLatest() {
+                    Snackbar.make(
+                            binding?.root!!, it,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+            }
+            launch {
+                viewModel.navigateToHome.collectLatest {
                     if (it) {
                         startActivity(Intent(requireContext(), HomeActivity::class.java))
                         requireActivity().finish()
@@ -55,17 +65,18 @@ class LoginFragment : Fragment() {
                 }
             }
             launch {
-                viewModel.isLoading.collect {
-                    if (it) {
-                        binding?.apply {
-                            loadingBar.visibility = View.VISIBLE
-                        }
-                    }
-                    else {
-                        binding?.apply {
-                            loadingBar.visibility = View.INVISIBLE
-                        }
-                    }
+                viewModel.isLoading.collectLatest {
+                    binding?.loadingBar?.visibility = it
+                }
+            }
+            launch {
+                viewModel.emailValidationError.collectLatest {
+                    binding?.textEmailAddress?.error = it
+                }
+            }
+            launch {
+                viewModel.passwordValidationError.collectLatest {
+                    binding?.textPassword?.error = it
                 }
             }
 
