@@ -21,7 +21,7 @@ class UserRepositoryImp(
                 .await()
             Resource.Success(true)
         } catch (e: Exception) {
-            Resource.Error(ApiError(0, "Cannot add user, error: ${e.message}"))
+            Resource.Error(ApiError(0, "Something went wrong"))
         }
     }
 
@@ -39,7 +39,7 @@ class UserRepositoryImp(
             )
             Resource.Success(user)
         }catch (e: Exception) {
-            Resource.Error(ApiError(0, "Cannot get user, error: ${e.message}"))
+            Resource.Error(ApiError(0, "Something went wrong"))
         }
     }
 }
