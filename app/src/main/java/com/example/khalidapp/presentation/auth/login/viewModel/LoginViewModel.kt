@@ -1,5 +1,6 @@
 package com.example.khalidapp.presentation.auth.login.viewModel
 
+import android.util.Patterns
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +25,8 @@ class LoginViewModel @Inject constructor(
     val password = _password.asStateFlow()
     val passwordValidationError = MutableStateFlow<String?>(null)
 
-    val loginError = MutableSharedFlow<String>()
+    private val _loginError = MutableSharedFlow<String>()
+    val loginError = _loginError.asSharedFlow()
 
     private val _isLoading = MutableStateFlow(View.INVISIBLE)
     val isLoading = _isLoading.asStateFlow()
@@ -58,7 +60,7 @@ class LoginViewModel @Inject constructor(
                         _navigateToHome.value = true
                     }
                     is Resource.Error -> {
-                        loginError.emit(resource.apiError.errorMessage)
+                        _loginError.emit(resource.apiError.errorMessage)
                         _isLoading.value = View.INVISIBLE
 
                     }
@@ -73,18 +75,13 @@ class LoginViewModel @Inject constructor(
         emailValidationError.value = null
         passwordValidationError.value = null
 
-        if (_email.value.isEmpty() || _email.value.isBlank()) {
+        if (_email.value.isEmpty() || _email.value.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(_email.value).matches()) {
             emailValidationError.value = "Please enter a valid email address"
             isFormValid = false
         }
-        if (_password.value.length < 6) {
+        if (_password.value.isEmpty() || _password.value.isBlank() || _password.value.length < 6) {
+            passwordValidationError.value = "Password must be at least 6 characters"
             isFormValid = false
-            if (_password.value.isEmpty() || _password.value.isBlank()){
-                passwordValidationError.value = "Please enter a valid password"
-            }
-            else{
-                passwordValidationError.value = "Password must be at least 6 characters"
-            }
         }
 
         return isFormValid

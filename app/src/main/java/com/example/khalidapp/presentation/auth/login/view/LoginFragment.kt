@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
     private fun observe() {
         lifecycleScope.launch {
             launch {
-                viewModel.loginError.collectLatest() {
+                viewModel.loginError.collectLatest {
                     Snackbar.make(
                             binding?.root!!, it,
                             Snackbar.LENGTH_LONG

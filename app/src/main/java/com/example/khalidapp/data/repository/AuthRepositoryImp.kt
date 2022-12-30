@@ -1,10 +1,13 @@
 package com.example.khalidapp.data.repository
 
-import com.example.khalidapp.presentation.common.utils.Resource
-import com.example.khalidapp.domain.auth.repository.AuthRepository
 import com.example.khalidapp.data.model.ApiError
-import com.google.android.gms.tasks.Tasks.await
-import com.google.firebase.auth.*
+import com.example.khalidapp.data.util.FirebaseAuthExceptions
+import com.example.khalidapp.domain.auth.repository.AuthRepository
+import com.example.khalidapp.presentation.common.utils.Resource
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 class AuthRepositoryImp(
@@ -19,18 +22,19 @@ class AuthRepositoryImp(
             } else {
                 Resource.Success(result.user!!)
             }
-        }
-        catch(e: FirebaseAuthWeakPasswordException){
-            Resource.Error(ApiError(0, "Weak password, please make sure your password is strong"))
-        }
-        catch(e: FirebaseAuthInvalidCredentialsException){
-            Resource.Error(ApiError(0, "Invalid email, please make sure your email is valid"))
-        }
-        catch(e : FirebaseAuthUserCollisionException){
-            Resource.Error(ApiError(0, "This email already exists"))
-        }
-        catch (e: Exception) {
-            Resource.Error(ApiError(0, "Unknown  error: ${e.message}"))
+        } catch (e: FirebaseAuthException) {
+            return when (e.errorCode) {
+                FirebaseAuthExceptions.ERROR_EMAIL_ALREADY_IN_USE -> Resource.Error(
+                    ApiError(
+                        0,
+                        "The email address is already in use"
+                    )
+                )
+                else -> Resource.Error(ApiError(0, e.errorCode))
+            }
+
+        } catch (e: Exception) {
+            Resource.Error(ApiError(0, "Something went wrong!"))
         }
     }
 
@@ -38,12 +42,20 @@ class AuthRepositoryImp(
         return try {
             firebaseAuth.signInWithEmailAndPassword(email, password).await()
             Resource.Success(true)
-        }
-        catch(e : FirebaseAuthInvalidCredentialsException){
-            Resource.Error(ApiError(0, "Make sure your email or password is valid"))
-        }
-        catch (e: Exception) {
-            Resource.Error(ApiError(0, "Unknown  error: ${e.message}"))
+        } catch (e: FirebaseAuthException) {
+
+            return when (e.errorCode) {
+                FirebaseAuthExceptions.ERROR_USER_NOT_FOUND -> Resource.Error(
+                    ApiError(
+                        0,
+                        "Make sure that your email and password is correct"
+                    )
+                )
+                else -> Resource.Error(ApiError(0, e.errorCode))
+            }
+
+        } catch (e: Exception) {
+            Resource.Error(ApiError(0, "Something went wrong!"))
         }
     }
 
@@ -52,7 +64,7 @@ class AuthRepositoryImp(
             firebaseAuth.signOut()
             Resource.Success(true)
         } catch (e: Exception) {
-            Resource.Error(ApiError(0, "Unknown error: ${e.message}"))
+            Resource.Error(ApiError(0, "Something went wrong!"))
         }
     }
 }

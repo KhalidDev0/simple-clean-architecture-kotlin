@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.khalidapp.databinding.FragmentRegisterBinding
 import com.example.khalidapp.presentation.auth.register.viewModel.RegisterViewModel
 import com.example.khalidapp.presentation.home.view.HomeActivity
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -44,11 +46,52 @@ class RegisterFragment : Fragment() {
 
     private fun observe() {
         lifecycleScope.launch{
-            viewModel.navigateToHome.collect {
-                if (it) {
-                    startActivity(Intent(requireContext(), HomeActivity::class.java))
-                    requireActivity().finish()
+            launch {
+                viewModel.registerError.collectLatest {
+                    Snackbar.make(
+                        binding?.root!!, it,
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
+            }
+            launch {
+                viewModel.navigateToHome.collect {
+                    if (it) {
+                        startActivity(Intent(requireContext(), HomeActivity::class.java))
+                        requireActivity().finish()
+                    }
+                }
+            }
+            launch {
+                viewModel.isLoading.collectLatest {
+                    binding?.loadingBar?.visibility = it
+                }
+            }
+            launch {
+                viewModel.emailValidationError.collectLatest {
+                    binding?.textEmailAddress?.error = it
+                }
+            }
+            launch {
+                viewModel.passwordValidationError.collectLatest {
+                    binding?.textPassword?.error = it
+                }
+            }
+            launch {
+                viewModel.nameValidationError.collectLatest {
+                    binding?.textName?.error = it
+                }
+            }
+            launch {
+                viewModel.ageValidationError.collectLatest {
+                    binding?.textAge?.error = it
+                }
+            }
+            launch {
+                viewModel.genderValidationError.collectLatest {
+                    binding?.femaleButton?.error = it
+                }
+
             }
         }
     }
