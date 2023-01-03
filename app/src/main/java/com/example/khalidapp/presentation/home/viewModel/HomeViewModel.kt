@@ -1,7 +1,5 @@
 package com.example.khalidapp.presentation.home.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.khalidapp.domain.auth.model.User
@@ -11,6 +9,8 @@ import com.example.khalidapp.presentation.common.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
-    private val _userInfo = MutableStateFlow(User("","","","",))
+    private val _userInfo = MutableStateFlow(User("ywefoyhskfyk", "", "", ""))
     val userInfo: StateFlow<User> = _userInfo
 
     private val _navigateToStart = MutableStateFlow(false)
@@ -30,9 +30,9 @@ class HomeViewModel @Inject constructor(
         getUser()
     }
 
-    private fun getUser() {
-        viewModelScope.launch {
-            when (val resource = getUserUseCase()) {
+    fun getUser() {
+        getUserUseCase().onEach { resource ->
+            when (resource) {
                 is Resource.Success -> {
                     _userInfo.value = resource.data
                 }
@@ -40,11 +40,10 @@ class HomeViewModel @Inject constructor(
 
                 }
                 is Resource.Loading -> {
-
+                    _navigateToStart.emit(true)
                 }
             }
-
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun logout() {
