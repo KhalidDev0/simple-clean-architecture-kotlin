@@ -53,6 +53,7 @@ class RegisterFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+
             }
             launch {
                 viewModel.navigateToHome.collect {
